@@ -6,7 +6,7 @@ function getHumanChoice(){
     let HumanChoice;
     do{
         HumanChoice=prompt("Pls enter rock, paper or scissors as your move:").toLowerCase();
-    } while(HumanChoice !== "rock" && HumanChoice !== "paper" && HumanChoice !== "scissors");
+    } while(HumanChoice !== "rock" && HumanChoice !== "paper" && HumanChoice !== "scissors" && HumanChoice!==null);
     return HumanChoice;
 }
 
