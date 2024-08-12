@@ -2,45 +2,97 @@ const moves=["rock","paper","scissors"];
 function getComputerChoice(){
     return moves[Math.floor(Math.random() * 3)];
 }
-function getHumanChoice(){
-    let HumanChoice;
-    do{
-        HumanChoice=prompt("Pls enter rock, paper or scissors as your move:").toLowerCase();
-    } while(HumanChoice !== "rock" && HumanChoice !== "paper" && HumanChoice !== "scissors" && HumanChoice!==null);
-    return HumanChoice;
-}
+
+const body=document.querySelector("body");
+
+const para=document.createElement("p");
+para.textContent="Please click on any button to your Choice, the Game will not be finished until you or the computer gets 5 points.";
+body.appendChild(para);
+
+const rock=document.createElement("button");
+const paper=document.createElement("button");
+const scissors=document.createElement("button");
+
+rock.textContent="rock";
+paper.textContent="paper";
+scissors.textContent="scissors";
+
+body.appendChild(rock);
+body.appendChild(paper);
+body.appendChild(scissors);
 
 let humanScore=0;
 let computerScore=0;
 
-function playRound(humanChoice,computerChoice){
-    if (humanChoice === computerChoice)
-        console.log("Its a Draw");
-    else if ((humanChoice==="rock" && computerChoice==="scissors") || (humanChoice==="paper" && computerChoice==="rock") ||(humanChoice==="scissors" && computerChoice==="paper"))
-        humanScore++;
-    else
-        computerScore++;
-}
+rock.addEventListener("click", () => {
 
-function playGame(){
-    for (let i = 0; i < 5; i++) {
-        console.log("ROUND "+(i+1)+": ");
+    const ComputerChoice=getComputerChoice();
+    console.log("The Computer gave:"+ComputerChoice);
+    console.log("Your gave: rock");
 
-        const humanSelection = getHumanChoice();
-        console.log("You gave "+humanSelection);
+    if(ComputerChoice==="scissors") console.log("Your Score:"+ ++humanScore+"\nComputer score:"+computerScore);
 
-        const computerSelection = getComputerChoice();
-        console.log("The Computer gave "+computerSelection);
-        
-        playRound(humanSelection, computerSelection);
-    }
-    console.log("You scored:"+humanScore);
-    console.log("The Computer scored:"+computerScore);
-    if(humanScore>computerScore)
-        console.log("Congrats!!You are the Winner!");
-    else if(humanScore<computerScore)
-        console.log("Sorry,You Lost,The Computer is the winner. Try again next time.");
-    else
-        console.log("Its a DRAW.");
-}
-playGame();
+    else if(ComputerChoice==="rock") {console.log("Its a draw.")}
+
+    else console.log("Your score:"+humanScore+"\nComputer score:"+ ++computerScore);
+
+});
+
+paper.addEventListener("click", () => {
+
+    const ComputerChoice=getComputerChoice();
+    console.log("The Computer gave:"+ComputerChoice);
+    console.log("Your gave: paper");
+
+    if(ComputerChoice==="rock") console.log("Your Score:"+ ++humanScore+"\nComputer score:"+computerScore);
+
+    else if(ComputerChoice==="paper") {console.log("Its a draw.")}
+
+    else console.log("Your score:"+humanScore+"\nComputer score:"+ ++computerScore);
+
+});
+
+scissors.addEventListener("click", () => {
+
+    const ComputerChoice=getComputerChoice();
+    console.log("The Computer gave:"+ComputerChoice);
+    console.log("Your gave: scissors");
+
+    if(ComputerChoice==="paper") console.log("Your Score:"+ ++humanScore+"\nComputer score:"+computerScore);
+
+    else if(ComputerChoice==="scissors") {console.log("Its a draw.")}
+
+    else console.log("Your score:"+humanScore+"\nComputer score:"+ ++computerScore);
+
+});
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+    
+    button.addEventListener("click", () => {
+
+        if(humanScore==5){
+
+            rock.setAttribute("disabled","");
+            paper.setAttribute("disabled","");
+            scissors.setAttribute("disabled","");
+
+            const div=document.createElement("div");
+            div.textContent="You scored 5 points!!,You are the winner!!";
+            body.appendChild(div);
+        }
+
+        else if(computerScore==5){
+
+            rock.disabled=true;
+            paper.disabled=true;
+            scissors.disabled=true;
+
+            const div=document.createElement("div");
+            div.textContent="The Computer scored 5 points!!,You Lose!!";
+            body.appendChild(div);
+        }
+
+    });
+});
